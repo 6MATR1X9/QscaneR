@@ -117,7 +117,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     }
                     
                     else {
-                        // Если это не URL, выведем содержимое в алерт
+                        // Если это не URL
                         let alert = UIAlertController(title: "QR-код", message: qrCodeString, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
