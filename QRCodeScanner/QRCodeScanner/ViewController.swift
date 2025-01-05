@@ -90,29 +90,28 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
     }
     
-    // Метод делегата для обработки найденных QR-кодов
+    // обработка найденных qr
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        // Проверка на наличие метаданных
+        // Проверка на наличие данных
         if metadataObjects.isEmpty {
             qrCodeFrameView?.frame = CGRect.zero
             print("QR-код не найден")
             return
         }
 
-        // Получение метаданных
+        // Получение данных
         if let metadataObj = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
             if metadataObj.type == .qr {
-                // Если найден QR-код, выделим его рамкой
+                // Выделение найденого QR-кода рамкой
                 let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
                 qrCodeFrameView?.frame = barCodeObject!.bounds
                 
-                // Если содержимое QR-кода не пустое, обрабатываем его
+                // Обработка QR-кода 
                 if let qrCodeString = metadataObj.stringValue {
                     print("Найден QR-код: \(qrCodeString)")
                     
-                    // Проверим, является ли содержимое QR-кода URL-адресом
+                    // Если содержимое - URL
                     if let url = URL(string: qrCodeString), UIApplication.shared.canOpenURL(url) {
-                        // Откроем URL в Safari
                         UIApplication.shared.open(url)
                     }
                     
